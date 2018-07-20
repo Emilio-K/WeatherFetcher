@@ -6,3 +6,11 @@ body {
 a {
   color: #00B7FF;
 }
+
+table{
+  font-size: 12px;
+}
+
+thead{
+  font-size: 15px;
+}

@@ -4,20 +4,21 @@ var path = require('path');
 var dotenv= require('dotenv').config();
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-var mongodb = 'mongodb://'+process.env.DB_USER+':'+process.env.DB_PASSWORD+'n@ds241875.mlab.com:41875/'+process.env.DB_NAME;
+var mongodb = 'mongodb://'+process.env.DB_USER+':'+process.env.DB_PASSWORD+'@ds241875.mlab.com:41875/'+process.env.DB_NAME;
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var mongoose = require('mongoose');
 var mongo= require('mongodb');
-var weather=require('./services/weather.js');
+
 
 var app = express();
-/*mongoose.connect(mongodb,
+mongoose.connect(mongodb,
+  {useNewUrlParser: true},
   (err) => {
     if(err) console.log(err);
-});*/
+});
 
-weather.getWeather();
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -44,7 +45,7 @@ app.use(function(err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500);
-  res.render('error');
+  res.render('error', {error: err});
 });
 
 module.exports = app;
